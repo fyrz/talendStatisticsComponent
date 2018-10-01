@@ -1,2 +1,5 @@
 = Statistic Components
 
+image:https://travis-ci.org/fyrz/talendStatisticsComponent.svg?branch=master["Build Status", link="https://travis-ci.org/fyrz/talendStatisticsComponent"] image:https://coveralls.io/repos/github/fyrz/talendStatisticsComponent/badge.svg?branch=master["Coverage Status", link="https://coveralls.io/github/fyrz/talendStatisticsComponent?branch=master"]
+
+
