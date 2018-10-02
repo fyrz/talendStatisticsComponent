@@ -64,6 +64,13 @@
       <scope>test</scope>
     </dependency>
 
+    <dependency>
+      <groupId>org.talend.sdk.component</groupId>
+      <artifactId>component-runtime-junit</artifactId>
+      <version>${talend.componentkit.version}</version>
+      <scope>test</scope>
+    </dependency>
+
   </dependencies>
 
   <build>
