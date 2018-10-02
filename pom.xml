@@ -23,6 +23,7 @@
     <talend.componentkit.version>1.0.4</talend.componentkit.version>
     <google.guava.version>26.0-jre</google.guava.version>
     <junit.jupiter.version>5.1.0</junit.jupiter.version>
+    <junit.platform.version>1.0.3</junit.platform.version>
     <maven.compiler.plugin.version>3.7.0</maven.compiler.plugin.version>
     <maven.surefire.plugin.version>2.19.1</maven.surefire.plugin.version>
     <johnzon.version>1.1.9</johnzon.version>
@@ -64,6 +65,13 @@
       <scope>test</scope>
     </dependency>
 
+    <dependency>
+      <groupId>org.talend.sdk.component</groupId>
+      <artifactId>component-runtime-junit</artifactId>
+      <version>${talend.componentkit.version}</version>
+      <scope>test</scope>
+    </dependency>
+
   </dependencies>
 
   <build>
@@ -98,7 +106,31 @@
         <configuration>
           <trimStackTrace>false</trimStackTrace>
           <runOrder>alphabetical</runOrder>
+          <properties>
+            <configurationParameters>
+              junit.jupiter.conditions.deactivate = *
+              junit.jupiter.extensions.autodetection.enabled = true
+              junit.jupiter.testinstance.lifecycle.default = per_class
+            </configurationParameters>
+          </properties>
         </configuration>
+        <dependencies>
+          <dependency>
+            <groupId>org.junit.platform</groupId>
+            <artifactId>junit-platform-surefire-provider</artifactId>
+            <version>${junit.platform.version}</version>
+          </dependency>
+          <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-engine</artifactId>
+            <version>${junit.jupiter.version}</version>
+          </dependency>
+          <dependency>
+            <groupId>org.talend.sdk.component</groupId>
+            <artifactId>component-runtime-junit</artifactId>
+            <version>${talend.componentkit.version}</version>
+          </dependency>
+        </dependencies>
       </plugin>
 
       <plugin>
