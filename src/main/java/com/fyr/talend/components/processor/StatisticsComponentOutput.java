@@ -1,7 +1,13 @@
 package com.fyr.talend.components.processor;
 
+import org.talend.sdk.component.api.meta.Documentation;
+
 import java.io.Serializable;
 
+/**
+ * Output definition for the Statistics Component
+ */
+@Documentation("Output definition for the Statistics Component")
 public class StatisticsComponentOutput implements Serializable {
 
     private String clusterName;

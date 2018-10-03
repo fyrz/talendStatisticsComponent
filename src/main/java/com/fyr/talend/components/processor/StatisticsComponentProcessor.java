@@ -13,12 +13,13 @@ import javax.annotation.PreDestroy;
 import java.io.Serializable;
 import java.text.ParseException;
 
+/**
+ * Talend-Component to add statistics to a defined input.
+ */
 @Version(1)
-// default version is 1, if some configuration changes happen between 2 versions you can add a migrationHandler
 @Icon(Icon.IconType.STAR)
-// you can use a custom one using @Icon(value=CUSTOM, custom="filename") and adding icons/filename_icon32.png in resources
 @Processor(name = "StatisticsComponent")
-@Documentation("TODO fill the documentation for this processor")
+@Documentation("Component which adds statistic values to the output.")
 public class StatisticsComponentProcessor implements Serializable {
     private final StatisticsComponentProcessorConfiguration configuration;
     private final Talend_statistics_componentService service;
@@ -45,7 +46,7 @@ public class StatisticsComponentProcessor implements Serializable {
     public void onNext(
             @Input final StatisticsComponentInput defaultInput, @Output final OutputEmitter<StatisticsComponentOutput> main) {
         final String clusterName = defaultInput.getClusterName();
-        StatisticsModel statisticsModel = null;
+        StatisticsModel statisticsModel;
         try {
             statisticsModel = new StatisticsModel().build(clusterName, defaultInput.getClusterValues(), configuration.getSeparator());
 

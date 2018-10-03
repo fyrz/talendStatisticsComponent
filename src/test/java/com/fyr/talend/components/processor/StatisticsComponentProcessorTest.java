@@ -14,7 +14,7 @@ public class StatisticsComponentProcessorTest {
 
     @Test
     public void testBeforeAndAfterGroup() {
-        StatisticsComponentProcessorConfiguration statisticsComponentProcessorConfiguration = new StatisticsComponentProcessorConfiguration().setMaxElements(10000).setSeparator(";");
+        StatisticsComponentProcessorConfiguration statisticsComponentProcessorConfiguration = new StatisticsComponentProcessorConfiguration().setSeparator(";");
         Processor processor = handler.createProcessor(StatisticsComponentProcessor.class,
                 statisticsComponentProcessorConfiguration);
         processor.start();
