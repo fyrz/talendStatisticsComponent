@@ -6,7 +6,10 @@ import com.google.common.collect.TreeMultiset;
 
 import java.text.NumberFormat;
 import java.text.ParseException;
-import java.util.*;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Locale;
+import java.util.Map;
 
 public class StatisticsModel {
 
@@ -34,18 +37,48 @@ public class StatisticsModel {
         }
         // Build
         for (String clusterValue : clusterValues.split(separator)) {
-            addModelEntry(clusterName, NumberFormat.getInstance(Locale.US).parse(clusterValue).doubleValue());
+            addModelEntryValue(clusterName, NumberFormat.getInstance(Locale.US).parse(clusterValue).doubleValue());
         }
         return this;
     }
 
     /**
+     * Build statistics model for cluster using a separated list of values
+     *
+     * @param clusterName   identifies the group of entries
+     * @param clusterValues values in the group
+     * @return StatisticsModel
+     */
+    public StatisticsModel build(final String clusterName, final double[] clusterValues) {
+        // Clear model
+        if (model.size() > 0) {
+            model = new HashMap<>();
+        }
+        // Build
+        for (Double clusterValue : clusterValues) {
+            addModelEntryValue(clusterName, clusterValue);
+        }
+        return this;
+    }
+
+
+    /**
      * Add entry to model
+     *
+     * @param clusterName identifies the group of entries
+     * @param modelEntry model entry
+     */
+    public void addModelEntry(final String clusterName, final SortedMultiset<Double> modelEntry) {
+        model.put(clusterName, modelEntry);
+    }
+
+    /**
+     * Add entry value to model
      *
      * @param clusterName  identifies the group of entries
      * @param clusterValue value indicates one value in the group
      */
-    public void addModelEntry(final String clusterName, final Double clusterValue) {
+    public void addModelEntryValue(final String clusterName, final Double clusterValue) {
         if (!model.containsKey(clusterName)) {
             model.put(clusterName, TreeMultiset.create());
         }
@@ -59,6 +92,14 @@ public class StatisticsModel {
      */
     public Map<String, SortedMultiset<Double>> getModel() {
         return model;
+    }
+
+
+    /**
+     * Returns an model entry
+     */
+    public SortedMultiset<Double> getModelEntry(final String clusterName) {
+        return model.get(clusterName);
     }
 
     /**

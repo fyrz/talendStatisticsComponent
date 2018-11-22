@@ -13,10 +13,10 @@ public class StatisticsModelTest {
     @Test
     public void testMinMaxValue() {
         StatisticsModel statisticsModel = new StatisticsModel();
-        statisticsModel.addModelEntry(clusterA, 1.0);
-        statisticsModel.addModelEntry(clusterA, 2.0);
-        statisticsModel.addModelEntry(clusterA, 3.0);
-        statisticsModel.addModelEntry(clusterB, 1.0);
+        statisticsModel.addModelEntryValue(clusterA, 1.0);
+        statisticsModel.addModelEntryValue(clusterA, 2.0);
+        statisticsModel.addModelEntryValue(clusterA, 3.0);
+        statisticsModel.addModelEntryValue(clusterB, 1.0);
 
         Assertions.assertEquals((Double)1.0,statisticsModel.getMinForCluster(clusterA));
         Assertions.assertEquals((Double)3.0,statisticsModel.getMaxForCluster(clusterA));
@@ -28,13 +28,13 @@ public class StatisticsModelTest {
     public void testOddQuartiles() {
         //5, 7, 4, 4, 6, 2, 8
         StatisticsModel statisticsModel = new StatisticsModel();
-        statisticsModel.addModelEntry(clusterA, 5.0);
-        statisticsModel.addModelEntry(clusterA, 7.0);
-        statisticsModel.addModelEntry(clusterA, 4.0);
-        statisticsModel.addModelEntry(clusterA, 4.0);
-        statisticsModel.addModelEntry(clusterA, 6.0);
-        statisticsModel.addModelEntry(clusterA, 2.0);
-        statisticsModel.addModelEntry(clusterA, 8.0);
+        statisticsModel.addModelEntryValue(clusterA, 5.0);
+        statisticsModel.addModelEntryValue(clusterA, 7.0);
+        statisticsModel.addModelEntryValue(clusterA, 4.0);
+        statisticsModel.addModelEntryValue(clusterA, 4.0);
+        statisticsModel.addModelEntryValue(clusterA, 6.0);
+        statisticsModel.addModelEntryValue(clusterA, 2.0);
+        statisticsModel.addModelEntryValue(clusterA, 8.0);
 
         Assertions.assertEquals((Double)5.0,statisticsModel.getMedian(clusterA));
         Assertions.assertEquals((Double)4.0,statisticsModel.getLowerQuartile(clusterA));
@@ -45,16 +45,16 @@ public class StatisticsModelTest {
     public void testEvenQuartiles() {
         //1, 3, 3, 4, 5, 6, 6, 7, 8, 8
         StatisticsModel statisticsModel = new StatisticsModel();
-        statisticsModel.addModelEntry(clusterA, 1.0);
-        statisticsModel.addModelEntry(clusterA, 3.0);
-        statisticsModel.addModelEntry(clusterA, 3.0);
-        statisticsModel.addModelEntry(clusterA, 4.0);
-        statisticsModel.addModelEntry(clusterA, 6.0);
-        statisticsModel.addModelEntry(clusterA, 6.0);
-        statisticsModel.addModelEntry(clusterA, 7.0);
-        statisticsModel.addModelEntry(clusterA, 8.0);
-        statisticsModel.addModelEntry(clusterA, 8.0);
-        statisticsModel.addModelEntry(clusterA, 5.0);
+        statisticsModel.addModelEntryValue(clusterA, 1.0);
+        statisticsModel.addModelEntryValue(clusterA, 3.0);
+        statisticsModel.addModelEntryValue(clusterA, 3.0);
+        statisticsModel.addModelEntryValue(clusterA, 4.0);
+        statisticsModel.addModelEntryValue(clusterA, 6.0);
+        statisticsModel.addModelEntryValue(clusterA, 6.0);
+        statisticsModel.addModelEntryValue(clusterA, 7.0);
+        statisticsModel.addModelEntryValue(clusterA, 8.0);
+        statisticsModel.addModelEntryValue(clusterA, 8.0);
+        statisticsModel.addModelEntryValue(clusterA, 5.0);
 
         Assertions.assertEquals((Double) 5.5, statisticsModel.getMedian(clusterA));
         Assertions.assertEquals((Double) 3.0, statisticsModel.getLowerQuartile(clusterA));
@@ -64,7 +64,7 @@ public class StatisticsModelTest {
     @Test
     public void testExceptionalCaseQuartileOneEntry() {
         StatisticsModel statisticsModel = new StatisticsModel();
-        statisticsModel.addModelEntry(clusterA, 1.0);
+        statisticsModel.addModelEntryValue(clusterA, 1.0);
 
         Assertions.assertEquals((Double)1.0,statisticsModel.getMedian(clusterA));
         Assertions.assertEquals((Double)1.0,statisticsModel.getLowerQuartile(clusterA));
@@ -74,8 +74,8 @@ public class StatisticsModelTest {
     @Test
     public void testExceptionalCaseQuartileTwoEntry() {
         StatisticsModel statisticsModel = new StatisticsModel();
-        statisticsModel.addModelEntry(clusterA, 1.0);
-        statisticsModel.addModelEntry(clusterA, 2.0);
+        statisticsModel.addModelEntryValue(clusterA, 1.0);
+        statisticsModel.addModelEntryValue(clusterA, 2.0);
 
         Assertions.assertEquals((Double)1.5,statisticsModel.getMedian(clusterA));
         Assertions.assertEquals((Double)1.0,statisticsModel.getLowerQuartile(clusterA));
@@ -85,11 +85,11 @@ public class StatisticsModelTest {
     @Test
     public void testAverage() {
         StatisticsModel statisticsModel = new StatisticsModel();
-        statisticsModel.addModelEntry(clusterA, 11.0);
-        statisticsModel.addModelEntry(clusterA, 23.0);
-        statisticsModel.addModelEntry(clusterA, 30.0);
-        statisticsModel.addModelEntry(clusterA, 47.0);
-        statisticsModel.addModelEntry(clusterA, 56.0);
+        statisticsModel.addModelEntryValue(clusterA, 11.0);
+        statisticsModel.addModelEntryValue(clusterA, 23.0);
+        statisticsModel.addModelEntryValue(clusterA, 30.0);
+        statisticsModel.addModelEntryValue(clusterA, 47.0);
+        statisticsModel.addModelEntryValue(clusterA, 56.0);
 
 
         Assertions.assertEquals((Double)33.4,statisticsModel.getAverage(clusterA));
@@ -99,14 +99,14 @@ public class StatisticsModelTest {
     @Test
     public void testStandardDeviation() {
         StatisticsModel statisticsModel = new StatisticsModel();
-        statisticsModel.addModelEntry(clusterA, 2.0);
-        statisticsModel.addModelEntry(clusterA, 4.0);
-        statisticsModel.addModelEntry(clusterA, 4.0);
-        statisticsModel.addModelEntry(clusterA, 4.0);
-        statisticsModel.addModelEntry(clusterA, 5.0);
-        statisticsModel.addModelEntry(clusterA, 5.0);
-        statisticsModel.addModelEntry(clusterA, 7.0);
-        statisticsModel.addModelEntry(clusterA, 9.0);
+        statisticsModel.addModelEntryValue(clusterA, 2.0);
+        statisticsModel.addModelEntryValue(clusterA, 4.0);
+        statisticsModel.addModelEntryValue(clusterA, 4.0);
+        statisticsModel.addModelEntryValue(clusterA, 4.0);
+        statisticsModel.addModelEntryValue(clusterA, 5.0);
+        statisticsModel.addModelEntryValue(clusterA, 5.0);
+        statisticsModel.addModelEntryValue(clusterA, 7.0);
+        statisticsModel.addModelEntryValue(clusterA, 9.0);
 
         Assertions.assertEquals((Integer)8, statisticsModel.getNumberOfEntries(clusterA));
         Assertions.assertEquals((Double)5.0,statisticsModel.getAverage(clusterA));
