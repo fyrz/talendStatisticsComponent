@@ -38,10 +38,11 @@ public class ClusterOptimizer {
                 statisticsModel.build(clusterName, breaks.classList(0));
                 if (statisticsModel.calcCoV(clusterName) > covRatioLimit) {
                     testFailed = true;
+                    break;
                 }
             }
 
-            if (!testFailed) {
+            if (testFailed) {
                 break;
             }
         }

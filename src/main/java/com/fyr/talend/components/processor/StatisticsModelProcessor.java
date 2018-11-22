@@ -50,7 +50,7 @@ public class StatisticsModelProcessor implements Serializable {
         final String clusterName = defaultInput.getClusterName();
         try {
             ClusterOptimizer clusterOptimizer = new ClusterOptimizer(clusterName, defaultInput.getClusterValues(), configuration.getSeparator());
-            Jenks.Breaks model = clusterOptimizer.optimize(Double.valueOf(configuration.getCovThreshold()));
+            Jenks.Breaks model = clusterOptimizer.optimize(Double.valueOf(configuration.getCovThreshold()), configuration.getMaxClusters());
 
             File modelFile = new File(configuration.getModelFolder(), clusterName + ".ser");
             Jenks.Breaks.serialize(modelFile.getAbsolutePath(), model);
