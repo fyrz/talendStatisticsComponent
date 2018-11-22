@@ -24,6 +24,7 @@ package com.fyr.talend.components.util;
 
 import com.google.common.collect.Lists;
 
+import java.io.*;
 import java.util.Arrays;
 import java.util.LinkedList;
 
@@ -194,7 +195,7 @@ public class Jenks {
 
     }
 
-    public static class Breaks {
+    public static class Breaks implements Serializable {
 
         private double[] sortedValues;
         private int[] breaks;
@@ -312,6 +313,35 @@ public class Jenks {
                 }
             }
             return numClassses() - 1;
+        }
+
+        public static void serialize(String absolutePathToModel, Breaks model) {
+            FileOutputStream fos = null;
+            ObjectOutputStream out = null;
+            try {
+                fos = new FileOutputStream(absolutePathToModel);
+                out = new ObjectOutputStream(fos);
+                out.writeObject(model);
+
+                out.close();
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+        }
+
+        public static Breaks deserialize(String absolutePathToModel) {
+            Breaks model = null;
+            FileInputStream fis = null;
+            ObjectInputStream in = null;
+            try {
+                fis = new FileInputStream(absolutePathToModel);
+                in = new ObjectInputStream(fis);
+                model = (Breaks) in.readObject();
+                in.close();
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+            return model;
         }
     }
 }

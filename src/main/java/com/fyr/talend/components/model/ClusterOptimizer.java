@@ -17,6 +17,10 @@ public class ClusterOptimizer {
     }
 
     public Jenks.Breaks optimize(double covRatioLimit) throws ParseException {
+        return optimize(covRatioLimit, 10);
+    }
+
+    public Jenks.Breaks optimize(double covRatioLimit, int maxClusters) throws ParseException {
         StatisticsModel statisticsModel = new StatisticsModel();
         Jenks jenks = new Jenks();
         Jenks.Breaks breaks = null;
@@ -26,7 +30,7 @@ public class ClusterOptimizer {
             jenks.addValue(Double.valueOf(clusterValue));
         }
 
-        for (int numClusters = 1; numClusters < 10; numClusters++) {
+        for (int numClusters = 1; numClusters < maxClusters; numClusters++) {
             testFailed = false;
             breaks = jenks.computeBreaks(numClusters);
 
@@ -41,7 +45,6 @@ public class ClusterOptimizer {
                 break;
             }
         }
-
         return breaks;
     }
 
