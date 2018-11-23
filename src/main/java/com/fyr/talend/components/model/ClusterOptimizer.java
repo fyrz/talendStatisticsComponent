@@ -42,7 +42,7 @@ public class ClusterOptimizer {
                 }
             }
 
-            if (testFailed) {
+            if (!testFailed) {
                 break;
             }
         }
