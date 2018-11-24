@@ -11,14 +11,24 @@ import java.io.Serializable;
 public class StatisticsModelOutput implements Serializable {
 
     private String clusterName;
-    private int num;
+    private int numberOfClusters;
+    private String clusterSummary;
 
-    public int getNum() {
-        return num;
+    public String getClusterSummary() {
+        return clusterSummary;
     }
 
-    public StatisticsModelOutput setNum(int num) {
-        this.num = num;
+    public StatisticsModelOutput setClusterSummary(String clusterSummary) {
+        this.clusterSummary = clusterSummary;
+        return this;
+    }
+
+    public int getNumberOfClusters() {
+        return numberOfClusters;
+    }
+
+    public StatisticsModelOutput setNumberOfClusters(int numberOfClusters) {
+        this.numberOfClusters = numberOfClusters;
         return this;
     }
 

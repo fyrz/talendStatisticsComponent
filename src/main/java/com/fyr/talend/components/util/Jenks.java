@@ -20,6 +20,9 @@ package com.fyr.talend.components.util;
  * License along with this program.  If not, see
  * <http://www.gnu.org/licenses/gpl-3.0.html>.
  * #L%
+ *
+ *
+ * Modified & extended by Fyrz
  **/
 
 import com.google.common.collect.Lists;
@@ -305,6 +308,26 @@ public class Jenks {
             }
             return sb.toString();
         }
+
+        /**
+         * Return summary of classes
+         *
+         * @return String
+         */
+        public String toSummaryString() {
+            StringBuilder sb = new StringBuilder();
+            for (int i = 0; i != numClassses(); ++i) {
+                if (getClassMin(i) == getClassMax(i)) {
+                    sb.append(getClassMin(i));
+                } else {
+                    sb.append(getClassMin(i)).append(" - ").append(getClassMax(i));
+                }
+                sb.append(" (" + getClassCount(i) + ")");
+                sb.append("\n");
+            }
+            return sb.toString();
+        }
+
 
         public int classOf(double value) {
             for (int i = 0; i != numClassses(); ++i) {

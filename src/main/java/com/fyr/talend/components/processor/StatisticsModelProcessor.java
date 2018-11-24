@@ -55,7 +55,7 @@ public class StatisticsModelProcessor implements Serializable {
             File modelFile = new File(configuration.getModelFolder(), clusterName + ".ser");
             Jenks.Breaks.serialize(modelFile.getAbsolutePath(), model);
 
-            main.emit(new StatisticsModelOutput().setClusterName(clusterName).setNum(model.numClassses()));
+            main.emit(new StatisticsModelOutput().setClusterName(clusterName).setNumberOfClusters(model.numClassses()).setClusterSummary(model.toSummaryString()));
 
         } catch (ParseException e) {
             e.printStackTrace();
