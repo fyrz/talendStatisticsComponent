@@ -341,7 +341,7 @@ public class Jenks {
                 // Check for division by zero
                 String percentageStr = "N/A";
                 if (totalAmount > 0) {
-                    percentageStr = df.format(values[i] / totalAmount);
+                    percentageStr = df.format((values[i] / totalAmount) * 100);
                 }
 
                 // print amount of cluster values in class and percentage in relation to total amount
