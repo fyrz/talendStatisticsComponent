@@ -337,7 +337,15 @@ public class Jenks {
                 } else {
                     sb.append(getClassMin(i)).append(" - ").append(getClassMax(i));
                 }
-                sb.append(" (" + getClassCount(i) + "," + df.format(values[i] / totalAmount) + "%)");
+
+                // Check for division by zero
+                String percentageStr = "N/A";
+                if (totalAmount > 0) {
+                    percentageStr = df.format(values[i] / totalAmount);
+                }
+
+                // print amount of cluster values in class and percentage in relation to total amount
+                sb.append(" (" + getClassCount(i) + ", " + percentageStr + "%)");
                 sb.append("\n");
             }
             return sb.toString();
