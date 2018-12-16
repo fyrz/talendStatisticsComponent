@@ -1,6 +1,7 @@
 package com.fyr.talend.components.model;
 
 import com.fyr.talend.components.util.Jenks;
+import javafx.util.Pair;
 
 import java.text.ParseException;
 
@@ -24,10 +25,21 @@ public class ClusterOptimizer {
         StatisticsModel statisticsModel = new StatisticsModel();
         Jenks jenks = new Jenks();
         Jenks.Breaks breaks = null;
+        Pair<Double, Double> pair;
         boolean testFailed;
 
         for (String clusterValue : clusterValues.split(separator)) {
-            jenks.addValue(Double.valueOf(clusterValue));
+            if (clusterValue.contains("/")) {
+                // Split value and amount of occurences
+                String[] values = clusterValue.split("/");
+                pair = new Pair<Double, Double>(Double.valueOf(values[0]), Double.valueOf(values[1]));
+            } else {
+                // If occurences are not given default to 1
+                pair = new Pair<Double, Double>(Double.valueOf(clusterValue), 1d);
+            }
+
+
+            jenks.addValue(pair);
         }
 
         for (int numClusters = 1; numClusters < maxClusters; numClusters++) {

@@ -26,8 +26,10 @@ package com.fyr.talend.components.util;
  **/
 
 import com.google.common.collect.Lists;
+import javafx.util.Pair;
 
 import java.io.*;
+import java.text.DecimalFormat;
 import java.util.Arrays;
 import java.util.LinkedList;
 
@@ -42,15 +44,15 @@ import java.util.LinkedList;
  */
 public class Jenks {
 
-    private LinkedList<Double> list = Lists.newLinkedList();
+    private LinkedList<Pair<Double, Double>> list = Lists.newLinkedList();
 
-    public void addValue(double value) {
-        list.add(value);
+    public void addValue(Pair<Double, Double> pair) {
+        list.add(pair);
     }
 
-    public void addValues(double... values) {
-        for (double value : values) {
-            addValue(value);
+    public void addValues(Pair<Double, Double>... values) {
+        for (Pair<Double, Double> pair : values) {
+            addValue(pair);
         }
     }
 
@@ -87,7 +89,7 @@ public class Jenks {
     private double[] toSortedArray() {
         double[] values = new double[this.list.size()];
         for (int i = 0; i != values.length; ++i) {
-            values[i] = this.list.get(i);
+            values[i] = this.list.get(i).getKey();
         }
         Arrays.sort(values);
         return values;
@@ -120,7 +122,7 @@ public class Jenks {
         int numdata = list.length;
 
         if (numdata == 0) {
-            return new Breaks(new double[0], new int[0]);
+            return new Breaks(this.list, new double[0], new int[0]);
         }
 
         double[][] mat1 = new double[numdata + 1][numclass + 1];
@@ -174,7 +176,7 @@ public class Jenks {
 
             k = (int) mat1[k][j] - 1;
         }
-        return new Breaks(list, kclass);
+        return new Breaks(this.list, list, kclass);
     }
 
     private interface DoubleFunction {
@@ -200,6 +202,7 @@ public class Jenks {
 
     public static class Breaks implements Serializable {
 
+        private LinkedList<Pair<Double, Double>> list;
         private double[] sortedValues;
         private int[] breaks;
 
@@ -207,7 +210,8 @@ public class Jenks {
          * @param sortedValues the complete array of sorted data values
          * @param breaks       the indexes of the values within the sorted array that begin new classes
          */
-        private Breaks(double[] sortedValues, int[] breaks) {
+        private Breaks(LinkedList<Pair<Double, Double>> list, double[] sortedValues, int[] breaks) {
+            this.list = list;
             this.sortedValues = sortedValues;
             this.breaks = breaks;
         }
@@ -315,6 +319,17 @@ public class Jenks {
          * @return String
          */
         public String toSummaryString() {
+            DecimalFormat df = new DecimalFormat("0.00##");
+            int currentClass;
+            double totalAmount = 0;
+
+            double[] values = new double[numClassses()];
+            for (Pair<Double, Double> pair : this.list) {
+                currentClass = classOf(pair.getKey());
+                totalAmount += pair.getKey() * pair.getValue();
+                values[currentClass] += pair.getKey() * pair.getValue();
+            }
+
             StringBuilder sb = new StringBuilder();
             for (int i = 0; i != numClassses(); ++i) {
                 if (getClassMin(i) == getClassMax(i)) {
@@ -322,13 +337,19 @@ public class Jenks {
                 } else {
                     sb.append(getClassMin(i)).append(" - ").append(getClassMax(i));
                 }
-                sb.append(" (" + getClassCount(i) + ")");
+                sb.append(" (" + getClassCount(i) + "," + df.format(values[i] / totalAmount) + "%)");
                 sb.append("\n");
             }
             return sb.toString();
         }
 
 
+        /**
+         * Return Class of double value
+         *
+         * @param value number of class
+         * @return
+         */
         public int classOf(double value) {
             for (int i = 0; i != numClassses(); ++i) {
                 if (value <= getClassMax(i)) {
