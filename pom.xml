@@ -98,6 +98,13 @@
             <arg>-parameters</arg>
           </compilerArgs>
         </configuration>
+        <dependencies>
+          <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-controls</artifactId>
+            <version>11</version>
+          </dependency>
+        </dependencies>
       </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
